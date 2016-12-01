@@ -1,3 +1,3 @@
 FROM centos
 RUN yum install telnet nslookup net-tools -y
-ENTRYPOINT ['/usr/bin/python','-m','SimpleHTTPServer','80']
+RUN python -m SimpleHTTPServer 80
