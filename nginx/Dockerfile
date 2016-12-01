@@ -1,0 +1,1 @@
+FROM internavenue/centos-nginx
