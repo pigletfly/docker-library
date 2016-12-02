@@ -12,19 +12,15 @@ RUN yum update -y
 RUN yum install -y nginx
 RUN yum install bind-utils telnet nslookup net-tools -y
 
-# Let Docker handle the daemon
-#RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
+RUN rm -rf /etc/nginx/conf.d/* /tmp/* /var/tmp/* /var/run/nginx \
+&& rm -f /etc/nginx/nginx.conf && mkdir /var/run/nginx && chown nginx /var/run/nginx && chmod 777 /var/run/nginx \
+# forward request and error logs to docker log collector
+&& ln -sf /dev/stdout /var/log/nginx/docker-access.log \
+&& ln -sf /dev/stderr /var/log/nginx/docker-error.log
 
-# Attach volumes.
-VOLUME /etc/nginx/sites-enabled
-VOLUME /var/log/nginx
+# nginx site conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Set working directory.
-WORKDIR /etc/nginx
+EXPOSE 80 443
 
-# Expose ports.
-EXPOSE 80
-EXPOSE 443
-
-# Define default command.
-ENTRYPOINT ["nginx"]
+CMD ["nginx","-g","daemon off;"]
