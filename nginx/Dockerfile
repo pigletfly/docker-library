@@ -18,9 +18,6 @@ RUN rm -rf /etc/nginx/conf.d/* /tmp/* /var/tmp/* /var/run/nginx \
 && ln -sf /dev/stdout /var/log/nginx/docker-access.log \
 && ln -sf /dev/stderr /var/log/nginx/docker-error.log
 
-# nginx site conf
-COPY ./nginx.conf /etc/nginx/nginx.conf
-
 EXPOSE 80 443
 
 CMD ["nginx","-g","daemon off;"]
