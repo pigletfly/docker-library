@@ -4,10 +4,11 @@ MAINTAINER NGINX Docker Maintainers "docker-maint@nginx.com"
 
 ENV NGINX_VERSION 1.11.6-1~jessie
 
-RUN deb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse
-RUN deb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse
-RUN deb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse
-RUN deb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse
+          deb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse
+          deb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse
+          deb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse" > /etc/apt/sources.list
+
 RUN apt-get install dnsutils bind-utils telnet -y
 RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
 	&& echo "deb http://nginx.org/packages/mainline/debian/ jessie nginx" >> /etc/apt/sources.list \
