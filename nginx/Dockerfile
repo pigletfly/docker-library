@@ -1,23 +1,28 @@
-# Pull base image.
-FROM centos
+FROM debian:jessie
 
-# Should something be wrong
-MAINTAINER Nicholas Anderson, nander13@gmu.edu
+MAINTAINER NGINX Docker Maintainers "docker-maint@nginx.com"
 
-# Add nginx official repository
-ADD nginx.repo /etc/yum.repos.d/nginx.repo
+ENV NGINX_VERSION 1.11.6-1~jessie
 
-# Install nginx and apply updates
-RUN yum update -y
-RUN yum install -y nginx
-RUN yum install bind-utils telnet nslookup net-tools -y
+RUN apt-get install dnsutils bind-utils telnet -y
+RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
+	&& echo "deb http://nginx.org/packages/mainline/debian/ jessie nginx" >> /etc/apt/sources.list \
+	&& apt-get update \
+	&& apt-get install --no-install-recommends --no-install-suggests -y \
+						ca-certificates \
+						nginx=${NGINX_VERSION} \
+						nginx-module-xslt \
+						nginx-module-geoip \
+						nginx-module-image-filter \
+						nginx-module-perl \
+						nginx-module-njs \
+						gettext-base \
+	&& rm -rf /var/lib/apt/lists/*
 
-RUN rm -rf /etc/nginx/conf.d/* /tmp/* /var/tmp/* /var/run/nginx \
-&& rm -f /etc/nginx/nginx.conf && mkdir /var/run/nginx && chown nginx /var/run/nginx && chmod 777 /var/run/nginx \
 # forward request and error logs to docker log collector
-&& ln -sf /dev/stdout /var/log/nginx/docker-access.log \
-&& ln -sf /dev/stderr /var/log/nginx/docker-error.log
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
 EXPOSE 80 443
 
-CMD ["nginx","-g","daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
