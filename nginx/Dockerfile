@@ -13,7 +13,7 @@ RUN yum install -y nginx
 RUN yum install bind-utils telnet nslookup net-tools -y
 
 # Let Docker handle the daemon
-RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
+#RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 
 # Attach volumes.
 VOLUME /etc/nginx/sites-enabled
