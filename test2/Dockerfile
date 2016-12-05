@@ -1,0 +1,6 @@
+FROM centos
+
+RUN yum install net-tools telnet  bridge-utils bind-utils -y
+EXPOSE 8000
+
+CMD ["python", "-m", "SimpleHTTPServer"]
