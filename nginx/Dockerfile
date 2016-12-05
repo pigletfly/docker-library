@@ -11,7 +11,6 @@ deb-src http://mirrors.163.com/debian/ jessie-updates main non-free contrib \n\
 deb-src http://mirrors.163.com/debian/ jessie-backports main non-free contrib \n\
 deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib \n\
 deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib \n\
-deb http://nginx.org/packages/mainline/debian/ jessie nginx \
 " > /etc/apt/sources.list
 RUN apt-get update 
 RUN apt-get upgrade -y
