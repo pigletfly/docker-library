@@ -3,6 +3,16 @@ FROM debian:jessie
 MAINTAINER NGINX Docker Maintainers "docker-maint@nginx.com"
 
 ENV NGINX_VERSION 1.11.6-1~jessie
+RUN echo "deb http://mirrors.163.com/debian/ jessie main non-free contrib \n\
+deb http://mirrors.163.com/debian/ jessie-updates main non-free contrib \n\
+deb http://mirrors.163.com/debian/ jessie-backports main non-free contrib \n\
+deb-src http://mirrors.163.com/debian/ jessie main non-free contrib \n\
+deb-src http://mirrors.163.com/debian/ jessie-updates main non-free contrib \n\
+deb-src http://mirrors.163.com/debian/ jessie-backports main non-free contrib \n\
+deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib \n\
+deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib \n\
+deb http://nginx.org/packages/mainline/debian/ jessie nginx \
+" > /etc/apt/sources.list
 RUN apt-get update 
 RUN apt-get upgrade -y
 RUN apt-get install vim telnet dnsutils -y
